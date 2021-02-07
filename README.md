@@ -30,7 +30,19 @@ You'll also need to clone a new `.env` file from the `.env.tempalate` to store l
 $ cp .env.template .env  # (first time only)
 ```
 
-The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [TRELLO_KEY],[TRELLO_TOKEN] and [TRELLO_BOARD] variables which are used to set the Trello board and permissions.
+The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [TRELLO_KEY],[TRELLO_TOKEN] and [TRELLO_BOARD] variables which are used to set the Trello board and permissions. In addition, for running the tests_e2e files, you will require the gecko driver (available here : https://github.com/mozilla/geckodriver/releases) for your appropriate OS.
+
+## Running Tests
+
+Once the all dependencies have been installed, the full test suite can be run within the poetry environment by running:
+
+`poetry run pytest run`
+
+Alternatively, unit, integration and end 2 end tests can be invoked independantly:
+
+`poetry run pytest run test\unit`
+`poetry run pytest run test\integration`
+`poetry run pytest run test_e2e`
 
 ## Running the App
 

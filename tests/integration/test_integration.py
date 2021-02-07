@@ -2,17 +2,20 @@ import pytest
 from todo_app import create_app
 from unittest.mock import patch
 import json
+from dotenv import load_dotenv, find_dotenv
 from bs4 import BeautifulSoup as bs
-
-
-def test_find_tests():
-    assert 1 == 1
 
 
 @pytest.fixture
 def client():
-    # Create the test app using the 'testing' config as defined in the Config.py file
-    test_app = create_app('testing')
+
+    # Load testing variables from .test.env
+    file_path = find_dotenv('.env.test')
+    load_dotenv(file_path, override=True)
+
+    # Create the test app
+    test_app = create_app()
+
     # Use the app to create a test_client that can be used in our tests.
     with test_app.test_client() as client:
         yield client

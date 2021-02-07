@@ -88,6 +88,14 @@ class ViewModel:
         return self._lists
 
     @property
+    def done_lists(self):
+        return [i for i in self._lists if i.name == "DONE"]
+
+    @property
+    def not_done_lists(self):
+        return [i for i in self._lists if i.name != "DONE"]
+
+    @property
     def show_all_done_items(self):
         if len([i for i in self._cards if i.listName == "DONE"]) > 5:
             return False
@@ -100,3 +108,7 @@ class ViewModel:
     @property
     def older_done_items(self):
         return [i for i in self._cards if i.listName == "DONE" and i.dateLastActivity != self.get_date()]
+
+    @property
+    def all_done_items(self):
+        return [i for i in self._cards if i.listName == "DONE"]

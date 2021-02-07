@@ -4,27 +4,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     """Base configuration variables."""
-    TESTING = False
-    TRELLO_KEY = os.environ.get('TRELLO_KEY')
-    TRELLO_TOKEN = os.environ.get('TRELLO_TOKEN')
-    TRELLO_BOARD = os.environ.get('TRELLO_BOARD')
 
-
-class TestingConfig(Config):
-    """Test configuration variables."""
-    TESTING = True
-    #TRELLO_BOARD = os.environ.get('TRELLO_TEST_BOARD')
-    TRELLO_BOARD = "TEST_BOARD"
-
-
-class SystemTestingConfig(Config):
-    """Test configuration variables."""
-    TESTING = True
-    TRELLO_BOARD = "SYSTEM_TEST_BOARD"
-
-
-config = {
-    'system testing': SystemTestingConfig,
-    'testing': TestingConfig,
-    'default': Config
-}
+    def __init__(self):
+        self.TESTING = os.environ.get('TESTING')
+        self.TRELLO_KEY = os.environ.get('TRELLO_KEY')
+        self.TRELLO_TOKEN = os.environ.get('TRELLO_TOKEN')
+        self.TRELLO_BOARD = os.environ.get('TRELLO_BOARD')

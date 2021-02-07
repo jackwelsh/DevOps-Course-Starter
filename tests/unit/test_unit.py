@@ -11,10 +11,6 @@ from todo_app.index.trello import *
 from todo_app.index.objects import *
 
 
-def test_find_tests():
-    assert 1 == 1
-
-
 class mock_trello_api:
 
     def get_cards():

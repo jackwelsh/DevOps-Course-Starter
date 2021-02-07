@@ -5,7 +5,8 @@ import pytest
 import os
 from todo_app import create_app
 from threading import Thread
-from config import config
+import config
+from dotenv import load_dotenv, find_dotenv
 
 
 @pytest.fixture(scope="module")
@@ -17,9 +18,10 @@ def driver():
 class BoardMaker:
     def __init__(self, config):
         self.url_prefix = "https://api.trello.com/1/"
+        self.config = config.Config()
         self.query = {
-            'key': config['system testing'].TRELLO_KEY,
-            'token': config['system testing'].TRELLO_TOKEN
+            'key': self.config.TRELLO_KEY,
+            'token': self.config.TRELLO_TOKEN
         }
 
     def create_board(self):
@@ -47,30 +49,20 @@ class BoardMaker:
         response.raise_for_status()
 
 
-class XPaths:
-    def __init__(self):
-        self.entries = {
-            'task name': '/html/body/div/div/div[1]/div/form/div[1]/input',
-            'description input': '/html/body/div/div/div[1]/div/form/div[2]/textarea',
-            'date input': '/html/body/div/div/div[1]/div/form/div[3]/input',
-            'new task_button': '/html/body/div/div/div[1]/div/form/div[4]/button'
-        }
-
-        self.card = {
-            'card name': '/html/body/div/div/div[3]/div[1]/div/div/h5',
-            'card date': '/html/body/div/div/div[3]/div[1]/div/div/p[2]'
-        }
-
-
 @pytest.fixture
 def test_app():
 
-    # # Create the system testing app using the 'system testing' config + the new board id as defined in the Config.py file
+    # Load testing variables from .env.test
+    file_path = find_dotenv('.env.test')
+    load_dotenv(file_path, override=True)
+
     boardMaker = BoardMaker(config)
     board_id = boardMaker.create_board()
 
-    # updating the system testing config with the newly created trello board
-    test_app = create_app('system testing', overwrite_board=board_id)
+    os.environ['TRELLO_BOARD'] = board_id
+
+    # Create the test app
+    test_app = create_app()
 
     # start the app in its own thread.
     thread = Thread(target=lambda: test_app.run(use_reloader=False))
