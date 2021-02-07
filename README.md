@@ -30,16 +30,30 @@ You'll also need to clone a new `.env` file from the `.env.tempalate` to store l
 $ cp .env.template .env  # (first time only)
 ```
 
-The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
+The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [TRELLO_KEY],[TRELLO_TOKEN] and [TRELLO_BOARD] variables which are used to set the Trello board and permissions. In addition, for running the tests_e2e files, you will require the gecko driver (available here : https://github.com/mozilla/geckodriver/releases) for your appropriate OS.
+
+## Running Tests
+
+Once the all dependencies have been installed, the full test suite can be run within the poetry environment by running:
+
+`poetry run pytest run`
+
+Alternatively, unit, integration and end 2 end tests can be invoked independantly:
+
+`poetry run pytest run test\unit`
+`poetry run pytest run test\integration`
+`poetry run pytest run test_e2e`
 
 ## Running the App
 
 Once the all dependencies have been installed, start the Flask app in development mode within the poetry environment by running:
+
 ```bash
 $ poetry run flask run
 ```
 
 You should see output similar to the following:
+
 ```bash
  * Serving Flask app "app" (lazy loading)
  * Environment: development
@@ -49,4 +63,5 @@ You should see output similar to the following:
  * Debugger is active!
  * Debugger PIN: 226-556-590
 ```
+
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.

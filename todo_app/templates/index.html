@@ -1,4 +1,6 @@
-{% extends "layout.html" %} {% block title %}To-Do App{% endblock %} {% block
+{% extends "layout.html" %}
+{% from 'macros.html' import card %}
+{% block title %}To-Do App{% endblock %} {% block
 content %}
 <div class="container">
   <div class="row mb-5">
@@ -34,25 +36,45 @@ content %}
   </div>
 
   <div class="row">
-    <div class="col md-12">
+    <div class="col-md-12">
       <h2>Items</h2>
     </div>
   </div>
+
   <div class="row">
-    <div class="col-md-12">
-      {% set sort_on = request.args.sort_on|default('orderBy') %} {% for i in
-      cards|sort(attribute=sort_on)%}
-      <div class="card my-3">
-        <div class="card-body">
-          <h5 class="card-title">{{i.name}}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{i.listName}}</h6>
-          <p class="card-text">{{i.desc}}</p>
-          <p class="card-text">Due Date: {{i.due}}</p>
-          <a href="/card/{{i.id}}" class="card-link">Edit</a>
-        </div>
-      </div>
+    {% for l in card_view_model.not_done_lists %} 
+    <div class="col-md-4">
+      <h6>{{l.name}}</h6>
+      {% for i in card_view_model.cards %} 
+      {% if i.listName==l.name %}
+      {{ card(i) }}
+      {% endif%} 
       {% endfor %}
     </div>
+    {% endfor %}
+    {% for l in card_view_model.done_lists %}
+    <div class="col-md-4">
+      <h6>{{l.name}}</h6>
+      {% if card_view_model.show_all_done_items==True %}
+      {% for i in card_view_model.all_done_items %}
+      {{ card(i) }}
+      {% endfor %} 
+      {% else %}
+      <details>
+        <summary>Most Recently Completed Items</summary>
+        {% for i in card_view_model.recent_done_items %}
+        {{ card(i) }}
+        {% endfor %}
+      </details>
+      <details>
+        <summary>Older Completed Items</summary>
+        {% for i in card_view_model.older_done_items %}
+        {{ card(i) }}
+        {% endfor %}
+      </details>
+      {% endif %}
+    </div>
+    {% endfor %}
   </div>
   {% endblock %}
 </div>
