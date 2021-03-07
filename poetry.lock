@@ -73,14 +73,6 @@ version = "0.4.3"
 
 [[package]]
 category = "main"
-description = "Handle .env files"
-name = "dotenv"
-optional = false
-python-versions = "*"
-version = "0.0.5"
-
-[[package]]
-category = "main"
 description = "A simple framework for building complex web applications."
 name = "flask"
 optional = false
@@ -375,7 +367,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-cov", "jaraco.test (>=3.2.0)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
-content-hash = "689a27698c83b30ae25d63ad42044ccdb4d282c2a82d5eaae6060dd3f489e9fd"
+content-hash = "3dea7df5425547d3ae3bf61254cc646682590efce654286e8bfa20a9ad28d16f"
 lock-version = "1.0"
 python-versions = "^3.7"
 
@@ -408,9 +400,6 @@ click = [
 colorama = [
     {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
     {file = "colorama-0.4.3.tar.gz", hash = "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"},
-]
-dotenv = [
-    {file = "dotenv-0.0.5.tar.gz", hash = "sha256:b58d2ab3f83dbd4f8a362b21158a606bee87317a9444485566b3c8f0af847091"},
 ]
 flask = [
     {file = "Flask-1.1.2-py2.py3-none-any.whl", hash = "sha256:8a4fdd8936eba2512e9c85df320a37e694c93945b33ef33c89946a340a238557"},
