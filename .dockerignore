@@ -1,0 +1,8 @@
+.env
+.env.template
+env_vars
+.gitignore
+Vagrantfile
+.vscode
+geckodriver
+geckodriver.org

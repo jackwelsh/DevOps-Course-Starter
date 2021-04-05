@@ -1,17 +1,26 @@
 import requests
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
 import pytest
 import os
 from todo_app import create_app
 from threading import Thread
 import config
+import time
 from dotenv import load_dotenv, find_dotenv
 
 
+# Adding options to the firefox driver
+options = Options()
+options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("window-size=1400,2100")
+
+# need to add a wait here for the elements to load in the dashboard as tests are failing otherwise!
 @pytest.fixture(scope="module")
 def driver():
-    with webdriver.Firefox() as driver:
+    with webdriver.Firefox(options=options) as driver:
         yield driver
 
 
@@ -58,12 +67,10 @@ def test_app():
 
     boardMaker = BoardMaker(config)
     board_id = boardMaker.create_board()
-
     os.environ['TRELLO_BOARD'] = board_id
-
+    
     # Create the test app
     test_app = create_app()
-
     # start the app in its own thread.
     thread = Thread(target=lambda: test_app.run(use_reloader=False))
     thread.daemon = True
@@ -76,7 +83,8 @@ def test_app():
 
 
 def test_task_journey(driver, test_app):
-    driver.get('http://localhost:5000/')
+    driver.get('http://127.0.0.1:5000/')
+    time.sleep(2)
     assert driver.title == 'To-Do App'
 
     card = {
