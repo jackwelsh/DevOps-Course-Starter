@@ -1,0 +1,10 @@
+services:
+  web:
+    image: todo_app:test 
+    ports:
+      - '5000:5000'
+    volumes:
+      - type: bind
+        source: ./todo_app
+        target: /code/todo_app
+    env_file: .env.test

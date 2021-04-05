@@ -65,3 +65,8 @@ You should see output similar to the following:
 ```
 
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Docker commands
+sudo docker run --rm --env-file ./.env -p 8000:8000 todo_app:prod
+
+sudo docker run --rm --env-file ./.env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/code/todo_app todo_app:dev
